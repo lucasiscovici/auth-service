@@ -28,7 +28,7 @@ export const login = ({
   );
 };
 
-export const logout = () => {
+export const logout = ({ errorCB = () => {}, callback = () => {}}) => {
   try {
     const { LoginManager, AccessToken } = require("react-native-fbsdk");
   } catch (e) {
@@ -38,6 +38,7 @@ export const logout = () => {
     throw e;
   }
   LoginManager.logOut();
+  callback();
 };
 
 export const backend = "facebook";
