@@ -10,7 +10,10 @@
         "url": "git+https://github.com/lucasiscoviciMoon/auth-service.git"
     },
     "dependencies": {
+        "chalk": "^4.1.0",
+        "insert-line": "^1.1.0",
         "line-reader": "^0.4.0",
+        "prompts": "^2.4.0",
         "react": "^17.0.1",
         "react-native": "^0.63.4",
         "react-redux": "^7.2.2",
