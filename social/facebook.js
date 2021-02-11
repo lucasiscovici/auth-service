@@ -1,11 +1,10 @@
-import { AccessToken } from 'react-native-fbsdk'
-import { LoginManager } from 'react-native-fbsdk'
 
 export const login = ({
   errorCB = () => {},
   callback = () => {},
   ...props
 } = {}) => {
+  const { LoginManager, AccessToken } = require('react-native-fbsdk')
   LoginManager.logInWithPermissions(['public_profile']).then(
     function (result) {
       if (result.isCancelled) {
@@ -24,6 +23,7 @@ export const login = ({
 }
 
 export const logout = () => {
+  const { LoginManager, AccessToken } = require('react-native-fbsdk')
   LoginManager.logOut()
 }
 
