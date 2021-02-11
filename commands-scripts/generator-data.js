@@ -27,16 +27,21 @@
             openURL:(NSURL *)url
             options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options
 {
-  [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                 openURL:url
-                                                 options:options];
   return YES;
 }`,
-                antitext: `  [[FBSDKApplicationDelegate sharedInstance] application:application
+            },
+            {
+                filename: "{{ios_appDelegate}}",
+                pattern: [
+                    "- (BOOL)application:(UIApplication *)application", 
+                    "openURL:(NSURL *)url",
+                    "options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options",
+                ],
+                text: `    [[FBSDKApplicationDelegate sharedInstance] application:application
                                                  openURL:url
-                                                 options:options];`,
-                placement: "before",
-                antiplacement: "after"
-            }
+                                                 options:options]`;
+                placement: "after"
+
+            },
     ]
 }

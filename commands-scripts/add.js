@@ -31,20 +31,20 @@ const help = async () => {
 const addThat = async (that, options) => {
   await asyncForEach(that, async (v,i)=> {
      console.log(chalk.gray(`${i+1}/${that.length}`));
-     const {filename, pattern, antipattern, text, placement = "before"} = v;
+     const {filename, pattern, antipattern, text, prepro = options.prepro, placement = "before", type = "text"} = v;
      const compiledFilename = Object.entries(options.pathOptions).reduce((stt,[k,v])=> {
        return stt.replace(`{{${k}}}`, v)
      },filename)
      const lineNumberAntiPattern = antipattern ? await findLineNumber(compiledFilename, antipattern) : null;
     const lineNumberPattern = await findLineNumber(compiledFilename, pattern);
-    console.log("lineNumberPattern", lineNumberPattern)
+    // console.log("lineNumberPattern", lineNumberPattern)
     if(lineNumberAntiPattern === null && lineNumberPattern !== null) {
       const fn = placement == "before" ? addBefore : (placement == "after" ? addAfter : addAtLine) 
-
-      await fn(compiledFilename, lineNumberPattern, options.prepro?.(text) || text, {inverse: placement == "before"})
+      await fn(compiledFilename, lineNumberPattern, prepro?.(text) || text, {inverse: placement == "before", type})
     }
   })
 }
+
 const add = async (args, options) => {  
   console.log(chalk.blueBright("ADD"))
   // console.log(chalk.gray(`\tSocial :  [All, ${Object.keys(data)}]`))
