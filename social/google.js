@@ -5,10 +5,18 @@ export const login = async ({
   configuration = {},
   ...props
 } = {}) => {
+  try {
+    require.resolve('@react-native-community/google-signin');
+  } catch (e) {
+    console.error(
+      "auth-service: if you want use facebook backend, you have to install @react-native-community/google-signin and configure it"
+    );
+    throw e;
+  }
   const {
   GoogleSignin,
   statusCodes,
-} = require.resolve('@react-native-community/google-signin');
+} = require('@react-native-community/google-signin');
   try {
     if(Object.keys(configuration).length==0){
       console.error("auth-service: google need configuration")
@@ -36,6 +44,14 @@ export const login = async ({
 }
 
 export const logout = async () => {
+   try {
+    require.resolve('@react-native-community/google-signin');
+  } catch (e) {
+    console.error(
+      "auth-service: if you want use facebook backend, you have to install @react-native-community/google-signin and configure it"
+    );
+    throw e;
+  }
   const {
   GoogleSignin,
   statusCodes,
