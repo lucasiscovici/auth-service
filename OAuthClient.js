@@ -11,6 +11,7 @@ export default class OAuthClient {
     baseUrlAuth,
     authState = {},
     setAuthState,
+    configuration,
   } = {}) {
     this.client = new Auth({
       clientId,
@@ -18,6 +19,7 @@ export default class OAuthClient {
       baseUrl: baseUrlAuth,
     })
     this.logout = this.logout.bind(this)
+    this.configuration = configuration
   }
 
   setAuth(authState, setAuthState) {
@@ -65,7 +67,7 @@ export default class OAuthClient {
 
   async loginWithBackend({ backend } = {}) {
     const { accessToken: socialToken } = await new Promise((resolve, reject) =>
-      backends[backend].login({ callback: resolve, errorCB: () => {} }),
+      backends[backend].login({ callback: resolve, errorCB: () => {}, configuration: this.configuration[backend] }),
     )
     const {
       access_token: accessToken,

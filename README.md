@@ -84,6 +84,22 @@ logout() // clear tokens and internal state
 isLoading // true or false
 ```
 
+## configuration
+```js
+configure({
+	facebook:{
+		appId:'',
+	},
+	google: {
+	    webClientId:
+	      '', // client ID of type WEB for your server (needed to verify user ID and offline access)
+	    // accountName: '', // [Android] specifies an account name on the device that should be used
+	    iosClientId:
+	      '', // [iOS] optional, if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
+  }
+})
+```
+
 ## Tests
 
 ```jsx

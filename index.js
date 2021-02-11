@@ -27,9 +27,10 @@ export const configure = ({
   Authorization = 'Bearer',
   textAlertBeforeExpiredLogout, // logout because tokens are expired
   textAlertBeforeLogout, // logout because user is logged out
+  configuration = {}, // facebook, google
   ...providerProps
 } = {}) => {
-  const authBasic = new OAuthBasic(providerProps)
+  const authBasic = new OAuthBasic(providerProps, configuration)
   const ai = axiosInterceptor(authBasic)
   const config = {
     authServiceReducers,

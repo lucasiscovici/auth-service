@@ -1,6 +1,8 @@
+let googleConfigured = false;
 export const login = async ({
   errorCB = () => {},
   callback = () => {},
+  configuration = {},
   ...props
 } = {}) => {
   const {
@@ -8,6 +10,11 @@ export const login = async ({
   statusCodes,
 } = require('@react-native-community/google-signin');
   try {
+    if(Object.keys(configuration).length==0){
+      console.error("auth-service: google need configuration")
+    }
+    GoogleSignin.configure(configuration)
+    googleConfigured=true;
     const userInfo = await GoogleSignin.signIn()
     const token = await GoogleSignin.getTokens()
     callback(token)
@@ -33,6 +40,9 @@ export const logout = async () => {
   GoogleSignin,
   statusCodes,
 } = require('@react-native-community/google-signin');
+   if(!googleConfigured){
+      console.error("auth-service: google need configuration")
+    }
   await GoogleSignin.revokeAccess()
   await GoogleSignin.signOut()
 }

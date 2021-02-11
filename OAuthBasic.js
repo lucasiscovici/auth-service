@@ -21,7 +21,7 @@ import { createStore } from 'redux'
  * Provides the Auth0Context to its child components.
  */
 export default class OAuthBasic {
-  constructor(opts_oauth = {}) {
+  constructor(opts_oauth = {}, configuration={}) {
     const {
       clientId,
       clientSecret,
@@ -37,6 +37,7 @@ export default class OAuthBasic {
     } = opts_oauth
     this.debug = debug
     this.cb = {}
+    this.configuration = configuration
     this.autostart = autostart
     this.callbackAfterLogout = callbackAfterLogout
     this.callbackBeforeLogout = callbackBeforeLogout
@@ -45,6 +46,7 @@ export default class OAuthBasic {
       clientId,
       clientSecret,
       baseUrlAuth,
+      configuration
       // authState,
       // setAuthState,
     })
