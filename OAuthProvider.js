@@ -86,7 +86,6 @@ const OAuthProvider = ({
       // subscription,
     }
   }, [OAuthBasic, isAuthenticated, isLoading])
-
   return (
     <OAuthContext.Provider value={contextValue}>
       {children}
@@ -94,4 +93,4 @@ const OAuthProvider = ({
   )
 }
 
-export default OAuthContext
+export default OAuthProvider
