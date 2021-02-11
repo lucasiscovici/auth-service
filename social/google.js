@@ -8,7 +8,7 @@ export const login = async ({
   const {
   GoogleSignin,
   statusCodes,
-} = require('@react-native-community/google-signin');
+} = require.resolve('@react-native-community/google-signin');
   try {
     if(Object.keys(configuration).length==0){
       console.error("auth-service: google need configuration")
@@ -39,7 +39,7 @@ export const logout = async () => {
   const {
   GoogleSignin,
   statusCodes,
-} = require('@react-native-community/google-signin');
+} = require.resolve('@react-native-community/google-signin');
    if(!googleConfigured){
       console.error("auth-service: google need configuration")
     }
