@@ -1,2 +1,2 @@
-const {rnPluginConfig} = require('./commands');
+const {rnPluginConfig} = require('./commands-scripts/commands');
 module.exports = {commands:rnPluginConfig}
