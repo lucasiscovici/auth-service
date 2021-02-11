@@ -4,14 +4,13 @@ export const login = ({
   ...props
 } = {}) => {
   try {
-    require.resolve("react-native-fbsdk");
+    const { LoginManager, AccessToken } = require("react-native-fbsdk");
   } catch (e) {
     console.error(
       "auth-service: if you want use facebook backend, you have to install react-native-fbsdk and configure it"
     );
     throw e;
   }
-  const { LoginManager, AccessToken } = require("react-native-fbsdk");
   LoginManager.logInWithPermissions(["public_profile"]).then(
     function (result) {
       if (result.isCancelled) {
@@ -31,14 +30,13 @@ export const login = ({
 
 export const logout = () => {
   try {
-    require.resolve("react-native-fbsdk");
+    const { LoginManager, AccessToken } = require("react-native-fbsdk");
   } catch (e) {
     console.error(
       "auth-service: if you want use facebook backend, you have to install react-native-fbsdk and configure it"
     );
     throw e;
   }
-  const { LoginManager, AccessToken } = require("react-native-fbsdk");
   LoginManager.logOut();
 };
 

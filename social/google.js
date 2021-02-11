@@ -1,4 +1,5 @@
 let googleConfigured = false;
+
 export const login = async ({
   errorCB = () => {},
   callback = () => {},
@@ -6,21 +7,22 @@ export const login = async ({
   ...props
 } = {}) => {
   try {
-    require.resolve('@react-native-community/google-signin');
+    const {
+      GoogleSignin,
+      statusCodes,
+    } = require('@react-native-community/google-signin');
   } catch (e) {
     console.error(
       "auth-service: if you want use facebook backend, you have to install @react-native-community/google-signin and configure it"
     );
     throw e;
   }
-  const {
-  GoogleSignin,
-  statusCodes,
-} = require('@react-native-community/google-signin');
-  try {
-    if(Object.keys(configuration).length==0){
+   if(Object.keys(configuration).length==0){
       console.error("auth-service: google need configuration")
-    }
+      return;
+     
+   }
+  try {
     GoogleSignin.configure(configuration)
     googleConfigured=true;
     const userInfo = await GoogleSignin.signIn()
@@ -45,19 +47,19 @@ export const login = async ({
 
 export const logout = async () => {
    try {
-    require.resolve('@react-native-community/google-signin');
+    const {
+      GoogleSignin,
+      statusCodes,
+    } = require.resolve('@react-native-community/google-signin');
   } catch (e) {
     console.error(
       "auth-service: if you want use facebook backend, you have to install @react-native-community/google-signin and configure it"
     );
     throw e;
   }
-  const {
-  GoogleSignin,
-  statusCodes,
-} = require.resolve('@react-native-community/google-signin');
    if(!googleConfigured){
       console.error("auth-service: google need configuration")
+      return;
     }
   await GoogleSignin.revokeAccess()
   await GoogleSignin.signOut()
