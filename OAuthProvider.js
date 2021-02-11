@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useSelector, useDispatch } from 'react-redux'
 // import Auth0ProviderBasic from '@/auth/Auth0ProviderBasic'
-import Auth0Context from './auth0-context'
+import OAuthContext from './oauth-context'
 
 import {
   storeTokens,
@@ -10,15 +10,15 @@ import {
   auth_reducer_name,
   storeBackend,
 } from './auth-state'
-import { auth_reducer_name as auth_reducer_name_inner } from './auth0-internal-state'
+import { auth_reducer_name as auth_reducer_name_inner } from './oauth-internal-state'
 import { AsyncAlertOneButton } from './utils'
 
-const Auth0Provider = ({
+const OAuthProvider = ({
   children,
   oauthBasic,
   textAlertBeforeExpiredLogout, // logout because tokens are expired
   textAlertBeforeLogout, // logout because user is logged out
-  ...auth0props
+  ...oauthprops
 }) => {
   const ff = useSelector((state) => state)
   const { accessToken, expiresIn, refreshToken, backend } = useSelector(
@@ -88,10 +88,10 @@ const Auth0Provider = ({
   }, [OAuthBasic, isAuthenticated, isLoading])
 
   return (
-    <Auth0Context.Provider value={contextValue}>
+    <OAuthContext.Provider value={contextValue}>
       {children}
-    </Auth0Context.Provider>
+    </OAuthContext.Provider>
   )
 }
 
-export default Auth0Provider
+export default OAuthContext

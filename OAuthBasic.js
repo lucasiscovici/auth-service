@@ -1,7 +1,7 @@
 // import React, { useCallback, useEffect, useReducer, useState } from 'react'
-import Auth0Context from './auth0-context'
-import { reducer, initialAuthState } from './auth0-internal-state'
-import Client from './Auth0Client'
+import OAuthContext from './oauth-context'
+import { reducer, initialAuthState } from './oauth-internal-state'
+import Client from './OAuthClient'
 import { awaitGently } from './utils'
 import { createStore } from 'redux'
 
@@ -21,7 +21,7 @@ import { createStore } from 'redux'
  * Provides the Auth0Context to its child components.
  */
 export default class OAuthBasic {
-  constructor(opts_auth0 = {}) {
+  constructor(opts_oauth = {}) {
     const {
       clientId,
       clientSecret,
@@ -34,7 +34,7 @@ export default class OAuthBasic {
       debug = false,
       addToProvider = {},
       autostart = true,
-    } = opts_auth0
+    } = opts_oauth
     this.debug = debug
     this.cb = {}
     this.autostart = autostart
@@ -120,14 +120,14 @@ export default class OAuthBasic {
     if (!this.autostart) {
       return
     }
-    this.dispatch({ type: 'AUTH0_INTERNAL_LOADING_START' })
+    this.dispatch({ type: 'OAUTH_INTERNAL_LOADING_START' })
     const tokens = await this.getAccessTokenSilently()
     // if tokens is null -> all tokens (access, refresh) are expired
     if (tokens) {
-      this.dispatch({ type: 'AUTH0_INTERNAL_INITIALISED' })
+      this.dispatch({ type: 'OAUTH_INTERNAL_INITIALISED' })
     }
 
-    this.dispatch({ type: 'AUTH0_INTERNAL_LOADING_END' })
+    this.dispatch({ type: 'OAUTH_INTERNAL_LOADING_END' })
   }
 
   updateClientAuth(authState) {
@@ -139,7 +139,7 @@ export default class OAuthBasic {
       return await this.client.getTokensSilently(...res)
     } catch (e) {
       if (this.debug) {
-        console.log('Auth0Provider-Error: ', e)
+        console.log('OAuthProvider-Error: ', e)
       }
       throw e
     }
@@ -154,41 +154,41 @@ export default class OAuthBasic {
   }
   async loginWithBackend(backend) {
     try {
-      this.dispatch({ type: 'AUTH0_INTERNAL_LOADING_START' })
+      this.dispatch({ type: 'OAUTH_INTERNAL_LOADING_START' })
       const tokens = await this.client.loginWithBackend(backend)
-      this.dispatch({ type: 'AUTH0_INTERNAL_INITIALISED' })
+      this.dispatch({ type: 'OAUTH_INTERNAL_INITIALISED' })
       return tokens
     } catch (e) {
       if (e.error !== 'a0.session.user_cancelled') {
         throw e
       }
     } finally {
-      this.dispatch({ type: 'AUTH0_INTERNAL_LOADING_END' })
+      this.dispatch({ type: 'OAUTH_INTERNAL_LOADING_END' })
     }
   }
 
   async loginWithUsernamePassword(username, password) {
     try {
-      this.dispatch({ type: 'AUTH0_INTERNAL_LOADING_START' })
+      this.dispatch({ type: 'OAUTH_INTERNAL_LOADING_START' })
       const tokens = await this.client.loginWithUsernamePassword(
         username,
         password,
       )
-      this.dispatch({ type: 'AUTH0_INTERNAL_INITIALISED' })
+      this.dispatch({ type: 'OAUTH_INTERNAL_INITIALISED' })
       return tokens
     } catch (e) {
       if (e.error !== 'a0.session.user_cancelled') {
         throw e
       }
     } finally {
-      this.dispatch({ type: 'AUTH0_INTERNAL_LOADING_END' })
+      this.dispatch({ type: 'OAUTH_INTERNAL_LOADING_END' })
     }
   }
 
   async logout(type = 'logout', ...opts) {
     await awaitGently(this.callbackBeforeLogout(type))
     await awaitGently(this.client.logout(...opts))
-    this.dispatch({ type: 'AUTH0_INTERNAL_LOGOUT' })
+    this.dispatch({ type: 'OAUTH_INTERNAL_LOGOUT' })
     await awaitGently(this.callbackAfterLogout(type))
   }
 }

@@ -3,7 +3,7 @@ import Auth from './auth'
 // import jwtDecoder from 'jwt-decode';
 import { backends } from './social'
 
-export default class Auth0Client {
+export default class OAuthClient {
   constructor({
     domain,
     clientId,
@@ -175,7 +175,7 @@ export default class Auth0Client {
         console.log(error.response.status)
         console.log(error.response.headers)
       }
-      if (debug) console.log('Auth0Client—error: ', e)
+      if (debug) console.log('OAuthClient—error: ', e)
       throw e
     }
   }

@@ -1,14 +1,14 @@
-export const STORE_TOKENS = 'AUTH0_STORE_TOKENS'
+export const STORE_TOKENS = 'OAUTH_STORE_TOKENS'
 
-export const STORE_BACKEND = 'AUTH0_STORE_BACKEND'
+export const STORE_BACKEND = 'OAUTH_STORE_BACKEND'
 
-export const RECEIVE_LOGOUT = 'AUTH0_RECEIVE_LOGOUT'
+export const RECEIVE_LOGOUT = 'OAUTH_RECEIVE_LOGOUT'
 
-export const TEST_EXPIRE_ACCESS_TOKEN = 'AUTH0_TEST_EXPIRE_ACCESS_TOKEN'
+export const TEST_EXPIRE_ACCESS_TOKEN = 'OAUTH_TEST_EXPIRE_ACCESS_TOKEN'
 
-export const TEST_EXPIRE_REFRESH_TOKEN = 'AUTH0_TEST_EXPIRE_REFRESH_TOKEN'
+export const TEST_EXPIRE_REFRESH_TOKEN = 'OAUTH_TEST_EXPIRE_REFRESH_TOKEN'
 
-export const DELETE_ACCESS_TOKEN = 'AUTH0_DELETE_ACCESS_TOKEN'
+export const DELETE_ACCESS_TOKEN = 'OAUTH_DELETE_ACCESS_TOKEN'
 
 export const authInitialState = {
   accessToken: null,
@@ -82,6 +82,6 @@ export const testExpireRefreshToken = () => ({
   type: TEST_EXPIRE_REFRESH_TOKEN,
 })
 
-const auth_reducer_name = 'auth0'
+const auth_reducer_name = 'oauth'
 
 export { auth_reducer_name, auth_reducer }

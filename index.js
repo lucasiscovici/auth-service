@@ -12,11 +12,11 @@ export {
   // auth_reducer,
   // auth_reducer_name,
 }
-import { auth_reducer, auth_reducer_name } from './auth-state'
+import { auth_reducer, auth_reducer_name } from './oauth-state'
 import {
   auth_reducer as auth_reducer_inner,
   auth_reducer_name as auth_reducer_name_inner,
-} from './auth0-internal-state'
+} from './oauth-internal-state'
 
 const authServiceReducers = {
   [auth_reducer_name]: auth_reducer,
