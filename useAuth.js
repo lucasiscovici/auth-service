@@ -1,7 +1,7 @@
 import { useContext, useReducer, useMemo, useRef, useState } from 'react'
 import OAuthContext from './oauth-context'
 import { useIsomorphicLayoutEffect } from 'react-redux/src/utils/useIsomorphicLayoutEffect'
-import { auth_reducer_name } from './auth-state'
+import { auth_reducer_name } from './oauth-state'
 const useOAuthBasic = () => {
   const { OAuthBasic, isAuthenticated, isLoading } = useContext(OAuthContext)
   return { OAuthBasic, isAuthenticated, isLoading }

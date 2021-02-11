@@ -1,7 +1,7 @@
 // import { useCallback } from 'react'
 
 // import { useDispatch } from 'react-redux'
-import { deleteAccessToken } from './auth-state.js'
+import { deleteAccessToken } from './oauth-state.js'
 
 // import useAuth from './useAuth'
 const axiosInterceptor = (authBasic) => {

@@ -9,7 +9,7 @@ import {
   logout,
   auth_reducer_name,
   storeBackend,
-} from './auth-state'
+} from './oauth-state'
 import { auth_reducer_name as auth_reducer_name_inner } from './oauth-internal-state'
 import { AsyncAlertOneButton } from './utils'
 
