@@ -28,6 +28,11 @@ export default class OAuthClient {
   }
 
   async logout(callbackError = () => {}) {
+    if(this.backend){
+      await new Promise((resolve, reject) =>
+            backends[backend].logout({ callback: resolve, errorCB: () => {}}),
+          )
+    }
     if (this?.authState?.accessToken) {
       this.client.webAuth
         .clearSession({ token: this?.authState?.accessToken })
@@ -69,6 +74,7 @@ export default class OAuthClient {
     const { accessToken: socialToken } = await new Promise((resolve, reject) =>
       backends[backend].login({ callback: resolve, errorCB: () => {}, configuration: this.configuration[backend] }),
     )
+    this.backend = backend;
     const {
       access_token: accessToken,
       expires_in: expiresIn,
