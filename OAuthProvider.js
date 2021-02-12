@@ -20,7 +20,6 @@ const OAuthProvider = ({
   textAlertBeforeLogout, // logout because user is logged out
   ...oauthprops
 }) => {
-  const ff = useSelector((state) => state)
   const { accessToken, expiresIn, refreshToken, backend } = useSelector(
     (state) => state[auth_reducer_name],
   )
