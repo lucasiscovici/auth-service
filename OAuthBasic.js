@@ -123,7 +123,7 @@ export default class OAuthBasic {
       return
     }
     this.dispatch({ type: 'OAUTH_INTERNAL_LOADING_START' })
-    const tokens = await this.getAccessTokenSilently()
+    const tokens = await this.getAccessTokenSilently("init")
     // if tokens is null -> all tokens (access, refresh) are expired
     if (tokens) {
       this.dispatch({ type: 'OAUTH_INTERNAL_INITIALISED' })
@@ -146,10 +146,10 @@ export default class OAuthBasic {
       throw e
     }
   }
-  async getAccessTokenSilently(...res) {
+  async getAccessTokenSilently(type= "expired",...res) {
     const tokens = await this.getTokensSilently(...res)
     if (!tokens && this.logoutIfTokensExpired) {
-      await this.logout('expired')
+      await this.logout(type)
       return null
     }
     return tokens?.accessToken ?? tokens?.access_token
