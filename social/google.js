@@ -13,7 +13,7 @@ export const login = ({
     } = require("@react-native-community/google-signin");
   } catch (e) {
     console.error(
-      "auth-service: if you want use facebook backend, you have to install @react-native-community/google-signin and configure it"
+      "auth-service: if you want use google backend, you have to install @react-native-community/google-signin and configure it"
     );
     throw e;
   }
@@ -54,7 +54,7 @@ export const logout = ({errorCB = () => {},callback = () => {},}) => {
     );
   } catch (e) {
     console.error(
-      "auth-service: if you want use facebook backend, you have to install @react-native-community/google-signin and configure it"
+      "auth-service: if you want use google backend, you have to install @react-native-community/google-signin and configure it"
     );
     throw e;
   }
