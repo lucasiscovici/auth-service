@@ -31,7 +31,7 @@ const help = async () => {
 const addThat = async (that, options) => {
   await asyncForEach(that, async (v,i)=> {
      console.log(chalk.gray(`${i+1}/${that.length}`));
-     const {filename, pattern, antipattern, text, prepro = options.prepro, placement = "before", type = "text", way = "top"} = v;
+     const {filename, pattern, antipattern, text, prepro = options.prepro, placement = "before", type = "text", way = "top", ask = {}} = v;
      const compiledFilename = Object.entries(options.pathOptions).reduce((stt,[k,v])=> {
        return stt.replace(`{{${k}}}`, v)
      },filename)
@@ -39,6 +39,10 @@ const addThat = async (that, options) => {
     const lineNumberPattern = await findLineNumber(compiledFilename, pattern);
     // console.log("lineNumberPattern", lineNumberPattern)
     if(lineNumberAntiPattern === null && lineNumberPattern !== null) {
+      const variables = await getPrompts(ask)
+      Object.entries(variables).forEach(([k, v]) =>{
+        text=text.replace(`{{${k}}}`,v)
+      })
       const fn = placement == "before" ? addBefore : (placement == "after" ? addAfter : addAtLine) 
       await fn(compiledFilename, lineNumberPattern, prepro?.(text) || text, {inverse: placement == "before", type})
     }

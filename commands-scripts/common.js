@@ -2,6 +2,9 @@ var RegexParser = require('regex-parser')
 const fs = require('fs')
 const lineReader = require('line-reader')
 const reverseLineReader = require('reverse-line-reader')
+const chalk = require('chalk');
+const prompts = require('prompts');
+
 const { insertLine, modifyLine, removeLine, checkLine } = require('./line.js')
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
@@ -62,6 +65,19 @@ const countLineInFile = async (filePath, callback) => {
    const to_string = fileBuffer.toString();
    const split_lines = to_string.split("\n");
    return split_lines.length;
+}
+const getPrompts = async (ask) => {
+  const variables = {}
+  for (const key in ask){
+    const value = ask[key];
+     const response = await prompts({
+        type: value?.type ?? "text",
+        name: key,
+        message: value?.message ?? "no mess"
+    });
+     variables[key] = response[key];
+  }
+  return variables;
 }
 
 const findLineNumber = async (file, pattern = [], way = "top") => {
