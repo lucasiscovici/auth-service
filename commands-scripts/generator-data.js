@@ -36,11 +36,12 @@
                     "- (BOOL)application:(UIApplication *)application", 
                     "openURL:(NSURL *)url",
                     "options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options",
+                    "return YES;"
                 ],
                 text: `    [[FBSDKApplicationDelegate sharedInstance] application:application
                                                  openURL:url
-                                                 options:options]`;
-                placement: "after"
+                                                 options:options]`,
+                placement: "before"
 
             },
     ]
