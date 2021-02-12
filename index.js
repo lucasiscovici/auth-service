@@ -52,6 +52,7 @@ export const configure = ({
         reducers: {
           ...authServiceReducers,
         },
+        postCreateStore: (store) => authBasic.setDispatch(store.dispatch)
       },
     },
     AuthProvider: ({ children }) => {
