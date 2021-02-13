@@ -85,8 +85,10 @@ const findLineNumber = async (file, pattern = [], way = "top") => {
     let patternCurr = 0
     let lineNumberPattern = null
     let lineNumber = 0
+    const count= await countLineInFile(file);
+    if(count == 0)reject();
     if ((pattern === '$' && way === "top")|| (pattern === '^' && way === "bottom")){
-      return await countLineInFile(file)
+      return count;
     }
     if ((pattern === '^' && way === "top") || (pattern === '$' && way === "bottom")) {
       return 0;
@@ -105,7 +107,7 @@ const findLineNumber = async (file, pattern = [], way = "top") => {
         ) {
           lineNumberPattern = lineNumber
           if (pattern.length == patternCurr + 1) {
-            resolve(lineNumberPattern)
+            resolve(way==="top" ? lineNumberPattern: count - lineNumberPattern - 1)
             return false
           }
           patternCurr = patternCurr + 1
@@ -114,11 +116,6 @@ const findLineNumber = async (file, pattern = [], way = "top") => {
           resolve(null)
         }
         lineNumber = lineNumber + 1
-      },
-      function (err) {
-        if (err) {
-          reject(err)
-        }
       },
     )
   })
