@@ -31,13 +31,12 @@ const help = async () => {
 const addThat = async (that, options) => {
   await asyncForEach(that, async (v,i)=> {
      console.log(chalk.gray(`${i+1}/${that.length}`));
-     const {filename, pattern, antipattern, text, prepro = options.prepro, placement = "before", type = "text", way = "top", ask = {}} = v;
+     const {filename, pattern, antipattern, text, prepro = options.prepro, placement = "before", type = "text", antiway = "top", way = "top", ask = {}} = v;
      const compiledFilename = Object.entries(options.pathOptions).reduce((stt,[k,v])=> {
        return stt.replace(`{{${k}}}`, v)
      },filename)
-     const lineNumberAntiPattern = antipattern ? await findLineNumber(compiledFilename, antipattern, way) : null;
+     const lineNumberAntiPattern = antipattern ? await findLineNumber(compiledFilename, antipattern, antiway) : null;
     const lineNumberPattern = await findLineNumber(compiledFilename, pattern, way);
-    // console.log("lineNumberPattern", lineNumberPattern)
     if(lineNumberAntiPattern === null && lineNumberPattern !== null) {
       const variables = await getPrompts(ask)
       let textFinal = text;
