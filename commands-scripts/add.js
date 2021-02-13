@@ -63,9 +63,13 @@ const addThat = async (that, options) => {
       error = {},
       stopIfAntiError = false,
       stopIfCheckError = false,
-      description
+      description,
+      description_color = "gray"
     } = v
-    console.log(chalk.gray(`${i + 1}/${that.length} ${description ? description : ""}`))
+    console.log(chalk.gray(`${i + 1}/${that.length} ${chalk[description_color](description ? description : "")}`))
+    if(filename === undefined){
+      return;
+    }
     const compiledFilename = Object.entries(options.pathOptions).reduce(
       (stt, [k, v]) => {
         return stt.replace(`{{${k}}}`, v)
