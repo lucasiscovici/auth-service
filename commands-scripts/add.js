@@ -40,11 +40,12 @@ const addThat = async (that, options) => {
     // console.log("lineNumberPattern", lineNumberPattern)
     if(lineNumberAntiPattern === null && lineNumberPattern !== null) {
       const variables = await getPrompts(ask)
+      let textFinal = text;
       Object.entries(variables).forEach(([k, v]) =>{
-        text=text.replace(`{{${k}}}`,v)
+        textFinal=textFinal.replace(`{{${k}}}`,v)
       })
       const fn = placement == "before" ? addBefore : (placement == "after" ? addAfter : addAtLine) 
-      await fn(compiledFilename, lineNumberPattern, prepro?.(text) || text, {inverse: placement == "before", type})
+      await fn(compiledFilename, lineNumberPattern, prepro?.(textFinal) ||textFinal, {inverse: placement == "before", type})
     }
   })
 }
