@@ -186,6 +186,8 @@ function setUpContentChecker(lineContent, options) {
   this.options = {
     prepend: false,
     append: false,
+    mode: "add"
+
   }
   if (typeof options !== 'undefined') {
     if ('prepend' in options) {
@@ -196,7 +198,10 @@ function setUpContentChecker(lineContent, options) {
     }
     if ('inverse' in options) {
       this.options.inverse = options.inverse
-    }
+    }   mode: "add"
+    if ('mode' in options) {
+        this.options.mode = options.mode
+     }
   }
   this.lineContent = lineContent.toString()
   return this
@@ -217,6 +222,11 @@ function check(
 
   var lines = fileContent.split(/\r\n|\r|\n/g)
   const linesContent = lineContentOrig.split(/\r\n|\r|\n/g)
+
+  if (options.mode === "remove"){
+    callback(fileContent.includes(lineContentOrig))
+    return;
+  }
   const linesContentLength = linesContent.length
   var nextLine = lines.length + 1
 
@@ -257,8 +267,9 @@ function Remover(filePath) {
     prepend: false,
     append: false,
     inverse: false,
+    mode: "add"
   }
-  this.lineContent = 1
+  this.lineContent = ''
   return this
 }
 
@@ -315,6 +326,7 @@ function setUpContent(lineContent, options) {
     prepend: false,
     append: false,
     inverse: false,
+    mode: "add"
   }
   if (typeof options !== 'undefined') {
     if ('prepend' in options) {
@@ -326,8 +338,11 @@ function setUpContent(lineContent, options) {
     if ('inverse' in options) {
       this.options.inverse = options.inverse
     }
+    if ('mode' in options) {
+      this.options.mode = options.mode
+    }
   }
-  this.lineContent = lineContent.toString().split('\n').length
+  this.lineContent = lineContent.toString()
   return this
 }
 
@@ -335,7 +350,7 @@ function remove(
   filePath,
   fileContent,
   atLineNumber,
-  lineCount,
+  lineContent,
   options,
   callback,
 ) {
@@ -345,30 +360,38 @@ function remove(
   var updatedContent
 
   var lines = fileContent.split(/\r\n|\r|\n/g)
-  var nextLine = lines.length + 1
 
-  if (atLineNumber > nextLine) {
-    return callback(new Error('Invalid line'))
-  }
+  var contentLines = lineContent.split(/\r\n|\r|\n/g).join("")
 
-  if (options.prepend || atLineNumber === 1) {
-    prepend = true
-  } else if (options.append || lines.length + 1 === atLineNumber) {
-    append = true
-  }
+  if (options.mode == "remove"){
+    updatedContent = fileContent.replace(lineContent, "")
+  }else{
 
-  if (prepend) {
-    updatedContent = lines.slice(lineCount)
-  } else if (append) {
-    updatedContent = lines.slice(0, lines.length - lineCount)
-  } else {
-    console.log(atLineNumber, lineCount, options.inverse)
-    updatedContent = lines.slice(0, atLineNumber + lineCount * (options.inverse ? -1 : 0))
-    updatedContent = updatedContent.concat(
-      lines.slice(atLineNumber + lineCount * (options.inverse ? 0 : 1)),
-    )
-  }
-  updatedContent = updatedContent.join('\n')
+  // var nextLine = lines.length + 1
+
+  // if (atLineNumber > nextLine) {
+  //   return callback(new Error('Invalid line'))
+  // }
+
+  // if (options.prepend || atLineNumber === 1) {
+  //   prepend = true
+  // } else if (options.append || lines.length + 1 === atLineNumber) {
+  //   append = true
+  // }
+
+  // if (prepend) {
+  //   updatedContent = lines.slice(lineCount)
+  // } else if (append) {
+  //   updatedContent = lines.slice(0, lines.length - lineCount)
+  // } else {
+  //   updatedContent = lines.slice(0, atLineNumber + lineCount * (options.inverse ? -1 : 0))
+  //   updatedContent = updatedContent.concat(
+  //     lines.slice(atLineNumber + lineCount * (options.inverse ? 0 : 1)),
+  //   )
+  // }
+  // updatedContent = updatedContent.join('\n')
+
+   } 
 
   fs.writeFile(filePath, updatedContent, function (err) {
     return callback(err)
