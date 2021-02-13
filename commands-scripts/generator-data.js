@@ -52,7 +52,7 @@
                 way: "bottom",
                 pattern: ["</dict>"],
                 ask:{appID:{message: "Please write your appCode from facebook", type:"text"}},
-                test:`<key>CFBundleURLTypes</key>
+                text:`<key>CFBundleURLTypes</key>
 <array>
   <dict>
     <key>CFBundleURLSchemes</key>
