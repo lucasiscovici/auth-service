@@ -118,6 +118,10 @@
             {
                 description: "Please add 'react-native-fbsdk' package: yarn add react-native-fbsdk",
                 description_color: "blueBright"
+            },
+            {
+                description: "Please install pods: npx pod-install",
+                description_color: "blueBright"
             }
     ]
 }
