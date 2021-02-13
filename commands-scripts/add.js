@@ -3,7 +3,7 @@ const prompts = require('prompts');
 
 const data = require("./generator-data");
 
-const {findLineNumber, addBefore, addAfter, addAtLine,asyncForEach} = require("./common");
+const {findLineNumber, addBefore, addAfter, addAtLine,asyncForEach, getPrompts} = require("./common");
 
 const help = async () => {
   const all = [{ title: 'All', description: `add the '[${Object.keys(data)}]' social configuration`, value: 'all' }]

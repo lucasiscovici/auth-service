@@ -135,4 +135,5 @@ module.exports = {
   removeAfter,
   findLineNumber,
   check,
+  getPrompts
 }
