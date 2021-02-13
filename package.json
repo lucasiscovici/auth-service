@@ -15,16 +15,17 @@
     },
     "peerDependenciesMeta": {
         "react-dom": {
-          "optional": true
+            "optional": true
         },
         "react-native": {
-          "optional": true
+            "optional": true
         }
     },
     "dependencies": {
         "chalk": "^4.1.0",
         "insert-line": "^1.1.0",
         "line-reader": "^0.4.0",
+        "node-filesystem-cache": "^1.0.2",
         "prompts": "^2.4.0",
         "react-redux": "^7.2.2",
         "redux": "^4.0.5",

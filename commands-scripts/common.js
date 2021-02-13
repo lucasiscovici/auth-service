@@ -4,7 +4,9 @@ const lineReader = require('line-reader')
 const reverseLineReader = require('reverse-line-reader')
 const chalk = require('chalk');
 const prompts = require('prompts');
-
+const CacheApi = require('node-filesystem-cache');
+const cachePath = __dirname + '/cache';
+ 
 const { insertLine, modifyLine, removeLine, checkLine } = require('./line.js')
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
@@ -69,10 +71,17 @@ const countLineInFile = async (filePath, callback) => {
    const split_lines = to_string.split("\n");
    return split_lines.length;
 }
+
+const cache = new CacheApi(cachePath);
+
 const getPrompts = async (ask) => {
   const variables = {}
   for (const key in ask){
     const value = ask[key];
+    if (cache.has(key)){
+       variables[key] = cache.get(key);
+       break;
+    } 
      const response = await prompts({
         type: value?.type ?? "text",
         name: key,
@@ -82,6 +91,8 @@ const getPrompts = async (ask) => {
        return null;
      }
      variables[key] = response[key];
+    cache.put(key,variables[key]);
+
   }
   return variables;
 }
