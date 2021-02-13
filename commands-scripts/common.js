@@ -56,6 +56,9 @@ const removeAtLine = async (file, lineIndice, text, options) => {
     .content(text, { inverse: options?.inverse ?? false })
     .at(lineIndice)
 }
+const removeAfter = async (file, lineIndice, text, options) => {
+  await removeAtLine(file, lineIndice, text, options)
+}
 
 const removeBefore = async (file, lineIndice, text, options) => {
   await removeAtLine(file, lineIndice, text, options)
@@ -120,7 +123,7 @@ const findLineNumber = async (file, pattern = [], way = "top") => {
       function (line, last) {
         if (
           pattern[patternCurr].trim() == line.trim() ||
-          RegexParser(pattern[patternCurr]).test(line)
+          RegexParser(pattern[patternCurr].trim()).test(line.trim())
         ) {
           lineNumberPattern = lineNumber
           if (pattern.length == patternCurr + 1) {
