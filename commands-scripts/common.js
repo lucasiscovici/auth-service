@@ -8,24 +8,27 @@ const prompts = require('prompts');
 const { insertLine, modifyLine, removeLine, checkLine } = require('./line.js')
 async function asyncForEach(array, callback) {
   for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array)
+    const response = await callback(array[index], index, array)
+    if(response === false){
+      break;
+    }
   }
 }
 const addAtLine = async (file, lineIndice, text, options) => {
   const ok = await check(file, lineIndice, text, options)
   if (ok) {
-    return null
+    return "checkError"
   }
-  await insertLine(file)
+  return await insertLine(file)
     .content(text, options ?? {})
     .at(lineIndice)
 }
 
 const addBefore = async (file, lineIndice, text, options) => {
-  await addAtLine(file, lineIndice, text, options)
+  return await addAtLine(file, lineIndice, text, options)
 }
 const addAfter = async (file, lineIndice, text, options) => {
-  await addAtLine(file, lineIndice + 1, text, options)
+  return await addAtLine(file, lineIndice + 1, text, options)
 }
 
 const replace = async (file, lineIndice, text, options) => {
@@ -75,6 +78,9 @@ const getPrompts = async (ask) => {
         name: key,
         message: value?.message ?? "no mess"
     });
+     if(response[key] === undefined){
+       return null;
+     }
      variables[key] = response[key];
   }
   return variables;
